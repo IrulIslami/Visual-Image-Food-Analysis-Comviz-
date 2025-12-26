@@ -1,0 +1,69 @@
+experiment:
+  name: "test_raw_images v2"
+  description: "Experiment using raw images without segmentation"
+  scenario: "raw"
+
+data:
+  base_dir: "data/raw"              # ← Points to your raw images
+  before_dirname: "before"
+  after_dirname: "after"
+  excel_file: "data/data_original_edit.xlsx"
+  use_segmentation: false           # ← No segmentation
+
+preprocessing:
+  img_size: [256, 256]
+  lighting_normalization: "clahe"
+  
+segmentation:
+  enabled: false                    # ← Segmentation disabled
+
+features:
+  hsv_bins: [8, 8, 4]
+  glcm_size: [128, 128]
+  glcm_levels: 6
+  glcm_distances: [1]
+  glcm_angles: [0, 0.785398, 1.570796, 2.356194]
+  extract_area_features: false      # ← No area features
+
+model:
+  type: "random_forest"
+  params:
+    n_estimators: 1000
+    max_depth: 12
+    max_features: 0.5
+    min_samples_leaf: 1
+    n_jobs: -1
+  
+  hyperparameter_search:
+    enabled: true
+    method: "grid"
+    param_grid:
+      n_estimators: [300, 600]
+      max_depth: [null, 12, 20]
+      max_features: ["sqrt", 0.5]
+      min_samples_leaf: [1, 3]
+    scoring: "neg_mean_absolute_error"
+    
+cross_validation:
+  outer_splits: 5
+  inner_splits: 3
+  test_size: 0.2
+  stratify_by_group: true
+
+evaluation:
+  metrics: ["mae", "mse", "r2"]
+  confidence_interval:
+    enabled: true
+    method: "bootstrap"
+    n_iterations: 1000
+    confidence_level: 0.95
+
+output:
+  save_model: true
+  save_features: true
+  model_dir: "results/models"
+  features_dir: "results/features"
+  metrics_dir: "results/metrics"
+  figures_dir: "results/figures"
+
+random_state: 42
