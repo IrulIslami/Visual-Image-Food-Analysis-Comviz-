@@ -19,8 +19,11 @@ venv.bak/
 *.swo
 
 # Data dan hasil
-data/
+/data/
 results/
+
+src/data/*
+!src/data/*.py
 
 
 # OS

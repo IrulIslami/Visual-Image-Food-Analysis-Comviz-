@@ -15,6 +15,7 @@ class Config:
         self._validate()
         self._process_numpy_values()
     
+    #cek beberapa komponen wajib config
     def _validate(self):
         """Validate required configuration keys."""
         required_sections = ['experiment', 'data', 'preprocessing', 

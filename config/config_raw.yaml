@@ -1,5 +1,5 @@
 experiment:
-  name: "test_raw_images v2"
+  name: "test_raw_images v3"
   description: "Experiment using raw images without segmentation"
   scenario: "raw"
 
@@ -28,10 +28,10 @@ features:
 model:
   type: "random_forest"
   params:
-    n_estimators: 1000
-    max_depth: 12
-    max_features: 0.5
-    min_samples_leaf: 1
+    n_estimators: 2000
+    max_depth: 20
+    max_features: 1
+    min_samples_leaf: 3
     n_jobs: -1
   
   hyperparameter_search:
