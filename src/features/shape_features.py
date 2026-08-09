@@ -14,7 +14,7 @@ class ShapeFeatureExtractor:
         Args:
             extract_area_features: Whether to extract area-based features
         """
-        self.extract_area_features = extract_area_features
+        self.do_extract_area_features = extract_area_features
     
     def extract_pair_metrics(
         self, 
@@ -22,33 +22,27 @@ class ShapeFeatureExtractor:
         img_after: np.ndarray
     ) -> np.ndarray:
         """
-        Extract similarity metrics between image pair.
-        
+        Extract edge-based spatial features from image pair.
+
         Features:
-        - SSIM (Structural Similarity Index)
-        - MSE (Mean Squared Error)
-        
-        Args:
-            img_before: Before image (RGB)
-            img_after: After image (RGB)
-            
-        Returns:
-            Feature vector [ssim, mse] (2,)
+        - Edge density of before image
+        - Edge density of after image
         """
-        # Convert to grayscale
         gray_before = cv2.cvtColor(img_before, cv2.COLOR_RGB2GRAY)
         gray_after = cv2.cvtColor(img_after, cv2.COLOR_RGB2GRAY)
-        
-        # Calculate SSIM
-        data_range = max(1e-6, float(gray_after.max() - gray_after.min()))
-        ssim_value = ssim(gray_before, gray_after, data_range=data_range)
-        
-        # Calculate MSE
-        mse_value = np.mean(
-            (gray_before.astype(np.float32) - gray_after.astype(np.float32)) ** 2
+
+        edges_before = cv2.Canny(gray_before, 100, 200)
+        edges_after = cv2.Canny(gray_after, 100, 200)
+
+        total_pixels = gray_before.shape[0] * gray_before.shape[1]
+
+        edge_density_before = np.count_nonzero(edges_before) / total_pixels
+        edge_density_after = np.count_nonzero(edges_after) / total_pixels
+
+        return np.array(
+            [edge_density_before, edge_density_after],
+            dtype=np.float32
         )
-        
-        return np.array([ssim_value, mse_value], dtype=np.float32)
     
     def extract_area_features(
         self, 
@@ -113,7 +107,7 @@ class ShapeFeatureExtractor:
         pair_metrics = self.extract_pair_metrics(img_before, img_after)
         
         # Extract area features if masks provided and enabled
-        if (self.extract_area_features and 
+        if (self.do_extract_area_features and 
             mask_before is not None and 
             mask_after is not None):
             area_features = self.extract_area_features(mask_before, mask_after)
@@ -128,9 +122,12 @@ class ShapeFeatureExtractor:
         Returns:
             List of feature names
         """
-        names = ["pair_ssim", "pair_mse"]
+        names = [
+            "edge_density_before",
+            "edge_density_after"
+            ]
         
-        if self.extract_area_features:
+        if self.do_extract_area_features:
             names.extend([
                 "area_before",
                 "area_after", 

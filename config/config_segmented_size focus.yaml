@@ -1,6 +1,6 @@
 experiment:
-  name: "EXP 1.2 Segmented Baseline - Tuning On"
-  description: "segmented Image, Baseline Scenario - Tuned"
+  name: "EXP 3.2 Segmented Baseline - Tuning On - Size Focused"
+  description: "Segmented images, Baseline - Focus on Sized Img and Glcm size"
   scenario: "segmented"
 
 data:
@@ -11,7 +11,7 @@ data:
   use_segmentation: true            # ← Applies segmentation during processing
 
 preprocessing:
-  img_size: [256, 256]
+  img_size: [512, 512]
   lighting_normalization: "clahe"
   
 segmentation:
@@ -26,7 +26,7 @@ segmentation:
 
 features:
   hsv_bins: [8, 8, 4]
-  glcm_size: [128, 128]
+  glcm_size: [256, 256]
   glcm_levels: 8
   glcm_distances: [1]
   glcm_angles: [0, 0.785398, 1.570796, 2.356194]

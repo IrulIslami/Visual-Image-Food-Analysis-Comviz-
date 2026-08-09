@@ -36,11 +36,12 @@ class DataLoader:
             "Weight After Eaten (g)", 
             "Name of the food"
         }
+        #debugging cek kolom
         missing = required_cols - set(df.columns)
         if missing:
             raise ValueError(f"Missing required columns: {missing}")
         
-        # Calculate target variable (percentage leftover)
+        # Calculate target variable (percentage leftover) (Y)
         wb = df["Weight Before Eaten (g)"].astype(float)
         wa = df["Weight After Eaten (g)"].astype(float)
         
@@ -63,11 +64,15 @@ class DataLoader:
             
         Returns:
             Dictionary mapping lowercase filename to Path object
+            {
+             "001_002_dsc_0066_bef.jpg": Path("data/raw/before/001_002_dsc_0066_bef.jpg")
+            }
         """
         index = {}
         if not folder.exists():
             raise FileNotFoundError(f"Image folder not found: {folder}")
         
+        #rekursif
         for p in folder.rglob("*"):
             if p.is_file() and p.suffix.lower() in ['.jpg', '.jpeg', '.png']:
                 index[p.name.lower()] = p

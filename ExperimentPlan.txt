@@ -1,0 +1,15 @@
+FASE 1 — Sanity Check & Baseline
+├── Exp 1.1  Raw Baseline         (config_raw, no tuning)
+└── Exp 1.2  Segmented Baseline   (config_segmented, no tuning)
+
+FASE 2 — Tuning & Optimasi
+├── Exp 2.1  Raw + Grid Search
+└── Exp 2.2  Segmented + Grid Search
+
+FASE 3 — Analisis Mendalam
+├── Exp 3.1  Feature Importance comparison (raw vs segmented)
+└── Exp 3.2  Error analysis per kelompok makanan& Optimasi
+├── Exp 2.1  Raw + Grid Search
+└── Exp 2.2  Segmented + Grid Search
+
+

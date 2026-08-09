@@ -1,36 +1,39 @@
 experiment:
-  name: "EXP 1.2 Segmented Baseline - Tuning On"
-  description: "segmented Image, Baseline Scenario - Tuned"
-  scenario: "segmented"
+  name: "hsv_glcm_raw_shape"
+  description: "Eksperimen citra raw menggunakan fitur HSV + GLCM + shape tanpa tuning"
+  scenario: "HSV+GLCM +shape,"
+
+force_recompute: true
 
 data:
-  base_dir: "data/raw"              # ← SAME as raw! Uses same images
+  base_dir: "data/raw"
   before_dirname: "before"
   after_dirname: "after"
   excel_file: "data/data_original_edit.xlsx"
-  use_segmentation: true            # ← Applies segmentation during processing
+  use_segmentation: false
 
 preprocessing:
   img_size: [256, 256]
   lighting_normalization: "clahe"
-  
+
 segmentation:
-  enabled: true                     # ← GrabCut applied on-the-fly
+  enabled: false
   method: "grabcut"
-  rect_scale: 0.75                  # Rectangle covers 75% of image center
-  iterations: 3                     # GrabCut iterations
+  rect_scale: 0.75
+  iterations: 3
   morphology:
-    open_iterations: 1              # Remove small noise
-    close_iterations: 1             # Fill small holes
+    open_iterations: 1
+    close_iterations: 1
     kernel_size: [3, 3]
 
 features:
+  selected_groups: ["hsv", "glcm", "shape"]
   hsv_bins: [8, 8, 4]
   glcm_size: [128, 128]
   glcm_levels: 8
   glcm_distances: [1]
   glcm_angles: [0, 0.785398, 1.570796, 2.356194]
-  extract_area_features: true       # ← Extracts area from masks
+  # extract_area_features: true
 
 model:
   type: "random_forest"
@@ -42,7 +45,7 @@ model:
     n_jobs: -1
   
   hyperparameter_search:
-    enabled: true
+    enabled: false
     method: "grid"
     param_grid:
       n_estimators: [300, 600,1000]

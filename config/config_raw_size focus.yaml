@@ -1,36 +1,29 @@
 experiment:
-  name: "EXP 1.2 Segmented Baseline - Tuning On"
-  description: "segmented Image, Baseline Scenario - Tuned"
-  scenario: "segmented"
+  name: "EXP 3.1 Basline - Tuning On - Size Focused"
+  description: "Raw images, Baseline - Focus on Sized Img and Glcm size"
+  scenario: "raw"
 
 data:
-  base_dir: "data/raw"              # ← SAME as raw! Uses same images
+  base_dir: "data/raw"              # ← Points to your raw images
   before_dirname: "before"
   after_dirname: "after"
   excel_file: "data/data_original_edit.xlsx"
-  use_segmentation: true            # ← Applies segmentation during processing
+  use_segmentation: false           # ← No segmentation
 
 preprocessing:
-  img_size: [256, 256]
+  img_size: [512, 512]
   lighting_normalization: "clahe"
   
 segmentation:
-  enabled: true                     # ← GrabCut applied on-the-fly
-  method: "grabcut"
-  rect_scale: 0.75                  # Rectangle covers 75% of image center
-  iterations: 3                     # GrabCut iterations
-  morphology:
-    open_iterations: 1              # Remove small noise
-    close_iterations: 1             # Fill small holes
-    kernel_size: [3, 3]
+  enabled: false                    # ← Segmentation disabled
 
 features:
   hsv_bins: [8, 8, 4]
-  glcm_size: [128, 128]
+  glcm_size: [256, 256]
   glcm_levels: 8
   glcm_distances: [1]
   glcm_angles: [0, 0.785398, 1.570796, 2.356194]
-  extract_area_features: true       # ← Extracts area from masks
+  extract_area_features: false      # ← No area features
 
 model:
   type: "random_forest"
@@ -50,7 +43,7 @@ model:
       max_features: ["sqrt", 0.3, 0.5] 
       min_samples_leaf: [1, 2,3,5]
     scoring: "neg_mean_absolute_error"
-
+    
 cross_validation:
   outer_splits: 5
   inner_splits: 3

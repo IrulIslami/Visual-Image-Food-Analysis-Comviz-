@@ -1,0 +1,104 @@
+===============================================================================
+FOOD LEFTOVER PREDICTION EXPERIMENT
+================================================================================
+
+Loading configuration from: config/config_raw.yaml
+Experiment: EXP1.1 (Basline)
+Scenario: raw
+Using segmentation: False
+Random seed: 42
+
+--------------------------------------------------------------------------------
+STEP 1: Loading and preparing data
+--------------------------------------------------------------------------------
+Indexed 524 'before' images
+Indexed 524 'after' images
+Valid samples: 524 / 524
+✓ Loaded 524 valid samples
+  Unique groups: 524
+
+--------------------------------------------------------------------------------
+STEP 2: Extracting features
+--------------------------------------------------------------------------------
+Extracting features from images...
+100%|████████████████████████████████████████████| 524/524 [00:10<00:00, 48.50it/s]
+✓ Extracted features: (524, 782)
+  Skipped samples: 0
+✓ Saved features to: results/features/EXP1.1 (Basline)_features.npz
+
+Feature dimensions:
+  color: 768
+  texture: 12
+  shape: 2
+  total: 782
+
+--------------------------------------------------------------------------------
+STEP 3: Training and evaluating model
+--------------------------------------------------------------------------------
+
+Performing nested cross-validation...
+Fold 1: MAE=16.81 | MSE=519.69 | R²=0.671 | best_params={}
+Fold 2: MAE=20.25 | MSE=657.27 | R²=0.615 | best_params={}
+Fold 3: MAE=18.69 | MSE=682.51 | R²=0.571 | best_params={}
+Fold 4: MAE=18.43 | MSE=559.17 | R²=0.672 | best_params={}
+Fold 5: MAE=16.59 | MSE=487.74 | R²=0.686 | best_params={}
+
+Cross-validation summary (mean ± std):
+            mae         mse        r2
+mean  18.153345  581.276014  0.642859
+std    1.501513   85.226878  0.048587
+
+Training final model on train/test split...
+✓ Model trained
+  Train samples: 419
+  Test samples: 105
+
+Evaluating model on test set...
+
+============================================================
+EVALUATION RESULTS
+============================================================
+
+Test Set Performance:
+  MAE:  20.40
+  MSE:  567.75
+  R²:   0.608
+
+95% Confidence Intervals:
+  MAE:  [18.23, 22.76]
+  MSE:  [467.07, 680.06]
+
+============================================================
+
+
+Menghitung Feature Importance...
+  [1/2] MDI (Mean Decrease Impurity)...
+  [2/2] Permutation Feature Importance (PFI)...
+  Computing PFI dengan 30 repeats pada 105 sampel test...
+
+--------------------------------------------------------------------------------
+STEP 4: Saving results and visualizations
+--------------------------------------------------------------------------------
+✓ Model saved to: results/models/EXP1.1 (Basline)_model.pkl
+Results saved to: results/metrics/EXP1.1 (Basline)_results.json
+
+Generating visualizations...
+/home/rul/Skripsi/src/utils/visualization.py:55: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/home/rul/Skripsi/src/utils/visualization.py:89: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/home/rul/Skripsi/src/utils/visualization.py:115: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/home/rul/Skripsi/src/utils/visualization.py:115: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/home/rul/Skripsi/src/utils/visualization.py:151: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+✓ Visualizations saved to: results/figures
+
+================================================================================
+EXPERIMENT COMPLETED SUCCESSFULLY!
+================================================================================
+
+Results saved to: results/metrics/EXP1.1 (Basline)_results.json
+Model saved to: results/models/EXP1.1 (Basline)_model.pkl
+Figures saved to: results/figures

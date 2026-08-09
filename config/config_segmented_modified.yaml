@@ -1,6 +1,6 @@
 experiment:
-  name: "EXP 1.2 Segmented Baseline - Tuning On"
-  description: "segmented Image, Baseline Scenario - Tuned"
+  name: "EXP 2.2.1 Segmented Baseline - Tuning On - Modified"
+  description: "segmented Image, GLCM level-distances but same size."
   scenario: "segmented"
 
 data:
@@ -25,10 +25,10 @@ segmentation:
     kernel_size: [3, 3]
 
 features:
-  hsv_bins: [8, 8, 4]
+  hsv_bins: [8, 8, 8]
   glcm_size: [128, 128]
-  glcm_levels: 8
-  glcm_distances: [1]
+  glcm_levels: 16
+  glcm_distances: [1, 2]
   glcm_angles: [0, 0.785398, 1.570796, 2.356194]
   extract_area_features: true       # ← Extracts area from masks
 

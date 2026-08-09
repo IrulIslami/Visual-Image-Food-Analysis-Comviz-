@@ -1,0 +1,105 @@
+================================================================================
+FOOD LEFTOVER PREDICTION EXPERIMENT
+================================================================================
+
+Loading configuration from: config/config_segmented.yaml
+Experiment: test_segmented_images
+Scenario: segmented
+Using segmentation: True
+Random seed: 42
+
+--------------------------------------------------------------------------------
+STEP 1: Loading and preparing data
+--------------------------------------------------------------------------------
+Indexed 524 'before' images
+Indexed 524 'after' images
+Valid samples: 524 / 524
+✓ Loaded 524 valid samples
+  Unique groups: 524
+
+--------------------------------------------------------------------------------
+STEP 2: Extracting features
+--------------------------------------------------------------------------------
+Extracting features from images...
+100%|████████████████████████████████████████████| 524/524 [09:47<00:00,  1.12s/it]
+✓ Extracted features: (524, 786)
+  Skipped samples: 0
+✓ Saved features to: results/features/test_segmented_images_features.npz
+
+Feature dimensions:
+  color: 768
+  texture: 12
+  shape: 6
+  total: 786
+
+--------------------------------------------------------------------------------
+STEP 3: Training and evaluating model
+--------------------------------------------------------------------------------
+
+Performing nested cross-validation...
+Fold 1: MAE=12.42 | MSE=393.31 | R²=0.751 | best_params={'max_depth': 12, 'max_features': 0.5, 'min_samples_leaf': 3, 'n_estimators': 600, 'n_jobs': -1, 'random_state': 42}
+Fold 2: MAE=12.67 | MSE=374.06 | R²=0.781 | best_params={'max_depth': 20, 'max_features': 0.5, 'min_samples_leaf': 1, 'n_estimators': 600, 'n_jobs': -1, 'random_state': 42}
+Fold 3: MAE=10.73 | MSE=290.72 | R²=0.817 | best_params={'max_depth': 12, 'max_features': 0.5, 'min_samples_leaf': 1, 'n_estimators': 300, 'n_jobs': -1, 'random_state': 42}
+Fold 4: MAE=12.71 | MSE=385.34 | R²=0.774 | best_params={'max_depth': 12, 'max_features': 0.5, 'min_samples_leaf': 1, 'n_estimators': 300, 'n_jobs': -1, 'random_state': 42}
+Fold 5: MAE=12.96 | MSE=366.93 | R²=0.763 | best_params={'max_depth': 12, 'max_features': 0.5, 'min_samples_leaf': 1, 'n_estimators': 300, 'n_jobs': -1, 'random_state': 42}
+
+Cross-validation summary (mean ± std):
+            mae         mse        r2
+mean  12.297864  362.071015  0.777297
+std    0.898338   41.154325  0.024924
+
+Training final model on train/test split...
+✓ Model trained
+  Train samples: 419
+  Test samples: 105
+
+Evaluating model on test set...
+
+============================================================
+EVALUATION RESULTS
+============================================================
+
+Test Set Performance:
+  MAE:  11.35
+  MSE:  239.87
+  R²:   0.834
+
+95% Confidence Intervals:
+  MAE:  [9.52, 13.29]
+  MSE:  [172.35, 310.63]
+
+============================================================
+
+
+Menghitung Feature Importance...
+  [1/2] MDI (Mean Decrease Impurity)...
+  [2/2] Permutation Feature Importance (PFI)...
+  Computing PFI dengan 30 repeats pada 105 sampel test...
+
+--------------------------------------------------------------------------------
+STEP 4: Saving results and visualizations
+--------------------------------------------------------------------------------
+✓ Model saved to: results/models/test_segmented_images_model.pkl
+Results saved to: results/metrics/test_segmented_images_results.json
+
+Generating visualizations...
+/home/rul/Skripsi/src/utils/visualization.py:55: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/home/rul/Skripsi/src/utils/visualization.py:89: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/home/rul/Skripsi/src/utils/visualization.py:115: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/home/rul/Skripsi/src/utils/visualization.py:115: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/home/rul/Skripsi/src/utils/visualization.py:151: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+✓ Visualizations saved to: results/figures
+
+================================================================================
+EXPERIMENT COMPLETED SUCCESSFULLY!
+================================================================================
+
+Results saved to: results/metrics/test_segmented_images_results.json
+Model saved to: results/models/test_segmented_images_model.pkl
+Figures saved to: results/figures
+.
